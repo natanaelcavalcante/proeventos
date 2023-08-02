@@ -33,6 +33,8 @@ namespace ProeventosB.API
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
             services.AddControllers();
+            //Adicionar o Cors para liberar acesso externo na API
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProeventosB.API", Version = "v1" });
@@ -54,6 +56,11 @@ namespace ProeventosB.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //Autorizando o Cors para acesso externo na API
+            app.UseCors(access => access.AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {
