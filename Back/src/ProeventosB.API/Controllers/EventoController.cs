@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProeventosB.API.Data;
 using ProeventosB.API.Models;
 
 namespace ProeventosB.API.Controllers
@@ -12,42 +13,52 @@ namespace ProeventosB.API.Controllers
     [Route("api/[controller]")]
     public class EventoController : ControllerBase
     {
-        
-        public IEnumerable<Evento> _evento = new Evento[]{
-                new Evento{
-                    EventoId = 1,
-                    Tema = "Angular e .Net 5",
-                    Local = "Curitiba-PR",
-                    DataEvento = "12/08/2023",
-                    QtdPessoas = 100,
-                    Lote = "1 Lote"   
-                },
-                new Evento{
-                    EventoId = 2,
-                    Tema = "Angular e suas Novidades",
-                    Local = "Curitiba-PR",
-                    DataEvento = "12/10/2023",
-                    QtdPessoas = 100,
-                    Lote = "2 Lote"   
-                }             
-            };
+        private readonly DataContext _context;
         
         //Construtor
-        public EventoController()
+        public EventoController(DataContext context)
         {        
+            _context = context;
         }
+        //Implementando o Post da API
+        [HttpPost]
+        public IEnumerable <Evento> Post()
+        {
+            return _context.Eventos;
+        }        
+
         //Implementando o Get da API
         [HttpGet]
         public IEnumerable <Evento> Get()
         {
-            return _evento;
+            return _context.Eventos;
         }
         //Implementando o Get por Id
         [HttpGet("{id}")]
-        public IEnumerable <Evento> GetById(int id)
+        public Evento GetById(int id)
         {
-            //Clausula Where para localizar objeto por Id
-            return _evento.Where(evento => evento.EventoId == id);
+            //Clausula FirstOrDefault para localizar objeto por Id
+            return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+        }
+        //Implementando o Put da API
+        [HttpPut]
+        public IEnumerable <Evento> Put()
+        {
+            return _context.Eventos;
+        }
+        //Implementando o Put por Id
+        [HttpPut("{id}")]
+        public Evento PutById(int id)
+        {
+            //Clausula FirstOrDefault para localizar objeto por Id
+            return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+        }
+        //Implementando o Delete por Id
+        [HttpDelete("{id}")]
+        public Evento DeleteById(int id)
+        {
+            //Clausula FirstOrDefault para localizar objeto por Id
+            return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
         }
         
     }
