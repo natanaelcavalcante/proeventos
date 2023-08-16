@@ -1,16 +1,20 @@
 <h2>Eventos</h2>
 <hr>
-<form action="" class="form-inline">
+<div action="" class="form-inline">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Buscar">
-        <button class="btn btn-outline-success">Buscar</button>         
+        <!-- Exemplo de Two way Data binding NgModel--> 
+        <label class="mr-2">Filtro:</label>
+        <input type="text" class="form-control" placeholder="Buscar"[(ngModel)]="filtroLista">        
+               
     </div>  
-</form>
+</div>
+<!--<h3>Filtro: {{filtroLista}}</h3>-->
 <table class="table table-striped">
     <thead class="table-dark">
         <tr>
+            <th><button type="button" class="btn btn-outline-light btn-sm"
+                (click)="alterarImg()">{{!exibirImg ? 'Exibir' : 'Ocultar'}}</button></th>
             <th>#</th>
-            <th>Imagem</th>
             <th>Tema</th>
             <th>Local</th>
             <th>Data</th>
@@ -20,15 +24,17 @@
         </tr>
     </thead>
     <tbody *ngIf="eventos && eventos.length">
-        <tr *ngFor="let evento of eventos">
-            <td>{{evento.eventoId}}</td>
+        <tr *ngFor="let evento of eventosFiltrados">
             <td> 
                 <!-- Exemplo de binding--> 
-                <img src="/assets/{{evento.imagemUrl}}" alt="{{evento.imagemUrl}}"
+                <img [collapse]="!exibirImg"
+                     [isAnimated]="true"
+                 src="/assets/{{evento.imagemUrl}}" alt="{{evento.imagemUrl}}"
                     [style.width.px]="widthImg"
                     [style.margin.px]="marginImg"
                 >               
             </td>
+            <td>{{evento.eventoId}}</td>
             <td>{{evento.tema}}</td>
             <td>{{evento.local}}</td>
             <td>{{evento.dataEvento}}</td>
