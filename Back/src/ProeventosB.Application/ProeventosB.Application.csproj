@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProeventosB.Domain\ProeventosB.Domain.csproj" />
+     <ProjectReference Include="..\ProeventosB.Persistence\ProeventosB.Persistence.csproj" />
+  </ItemGroup>
+</Project>
